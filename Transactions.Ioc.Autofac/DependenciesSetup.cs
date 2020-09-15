@@ -7,7 +7,6 @@ namespace Transactions.Ioc.Autofac
     {
         public static ContainerBuilder SetupDependencies(this ContainerBuilder builder)
         {
-            
             return builder;
         }
     }

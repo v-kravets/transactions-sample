@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Transactions.Web.Models;
+using Transactions.Web.Extensions;
 
 namespace Transactions.Web.Controllers
 {
@@ -17,16 +14,29 @@ namespace Transactions.Web.Controllers
         {
             _logger = logger;
         }
-
+        
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        
+        [HttpPost]
+        public IActionResult Index(FileUploadViewModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (model.FileInfo.IsGreaterThanBytes(1024 * 1024))
+            {
+                return BadRequest("File is over allowed limit");
+            }
+            
+            return Ok();
         }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
