@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Transactions.Parsing\Transactions.Parsing.csproj" />
+    <ProjectReference Include="..\Transactions.Utils\Transactions.Utils.csproj" />
   </ItemGroup>
 
 </Project>

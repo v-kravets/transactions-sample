@@ -1,6 +1,6 @@
 ﻿namespace Transactions.Model.Concrete
 {
-    public enum Status
+    public enum CurrencyTransactionStatus
     {
         A,
         R,

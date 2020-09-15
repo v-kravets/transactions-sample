@@ -1,17 +1,10 @@
 ﻿using System.IO;
-using Transactions.Model.Concrete;
+using System.Threading.Tasks;
 
 namespace Transactions.Parsing.Abstract
 {
     public interface IParsingStrategy
     {
-        IParsingResult ParseTransactions(Stream stream);
-    }
-
-    public interface IParsingResult
-    {
-        CurrencyTransaction[] Transactions { get; }
-        bool Success { get; }
-        string[] Errors { get; }
+        Task<IParsingResult> ParseTransactionsAsync(Stream stream);
     }
 }

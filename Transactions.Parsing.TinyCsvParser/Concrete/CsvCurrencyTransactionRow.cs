@@ -2,7 +2,7 @@
 
 namespace Transactions.Parsing.TinyCsvParser.Concrete
 {
-    public class CsvCurrencyTransaction
+    public class CsvCurrencyTransactionRow
     {
         public string Id { get; set; }
         public decimal Amount { get; set; }
