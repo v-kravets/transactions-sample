@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Transactions.Parsing.Abstract;
 using Transactions.Web.Models;
 using Transactions.Web.Extensions;
 
@@ -9,12 +10,14 @@ namespace Transactions.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IParsingStrategyFactory _parsingStrategyFactory;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IParsingStrategyFactory parsingStrategyFactory)
         {
             _logger = logger;
+            _parsingStrategyFactory = parsingStrategyFactory;
         }
-        
+
         [HttpGet]
         public IActionResult Index()
         {

@@ -8,4 +8,9 @@
     <PackageReference Include="Autofac" Version="5.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Transactions.Parsing.SystemXmlSerialization\Transactions.Parsing.SystemXmlSerialization.csproj" />
+    <ProjectReference Include="..\Transactions.Parsing.TinyCsvParser\Transactions.Parsing.TinyCsvParser.csproj" />
+  </ItemGroup>
+
 </Project>
