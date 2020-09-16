@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Transactions.Parsing.TinyCsvParser\Transactions.Parsing.TinyCsvParser.csproj" />
     <ProjectReference Include="..\Transactions.Parsing\Transactions.Parsing.csproj" />
     <ProjectReference Include="..\Transactions.Utils\Transactions.Utils.csproj" />
   </ItemGroup>

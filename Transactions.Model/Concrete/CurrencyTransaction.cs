@@ -4,6 +4,7 @@ namespace Transactions.Model.Concrete
 {
     public class CurrencyTransaction
     {
+        
         public CurrencyTransaction() { }
 
         public string Id { get; set; }
@@ -22,6 +23,11 @@ namespace Transactions.Model.Concrete
                 TransactionDateUtc = transactionDateUtc,
                 Status = status
             };
+        }
+
+        public override string ToString()
+        {
+            return $"{Id} {Amount} {CurrencyCode} {TransactionDateUtc:o} {Status}";
         }
     }
 }
