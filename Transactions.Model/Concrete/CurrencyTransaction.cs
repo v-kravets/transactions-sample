@@ -4,8 +4,7 @@ namespace Transactions.Model.Concrete
 {
     public class CurrencyTransaction
     {
-        
-        public CurrencyTransaction() { }
+        private CurrencyTransaction() { }
 
         public string Id { get; set; }
         public decimal Amount { get; set; }

@@ -17,7 +17,7 @@ namespace Transactions.Parsing.TinyCsvParser.Concrete
             var parserOptions = new CsvParserOptions(false, ',');
             var csvParser = new CsvParser<CsvCurrencyTransactionRow>(parserOptions, new CsvCurrencyTransactionRowMapping());
             var parsingResult = csvParser
-                .ReadFromString(new CsvReaderOptions(new[] {Environment.NewLine}), lines)
+                .ReadFromString(new CsvReaderOptions(new[] {"\n"}), lines)
                 .Select(r => new CsvMappingResultWrapper(r))
                 .ToArray()
                 .Validate();

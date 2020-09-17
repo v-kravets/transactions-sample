@@ -11,6 +11,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Transactions.Parsing.SystemXmlSerialization\Transactions.Parsing.SystemXmlSerialization.csproj" />
     <ProjectReference Include="..\Transactions.Parsing.TinyCsvParser\Transactions.Parsing.TinyCsvParser.csproj" />
+    <ProjectReference Include="..\Transactions.Repository.MsSql\Transactions.Repository.MsSql.csproj" />
+    <ProjectReference Include="..\Transactions.Services.Transactions\Transactions.Services.Transactions.csproj" />
+    <ProjectReference Include="..\Transactions.Services\Transactions.Services.csproj" />
   </ItemGroup>
 
 </Project>

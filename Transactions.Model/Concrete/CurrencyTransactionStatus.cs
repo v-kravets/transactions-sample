@@ -2,8 +2,8 @@
 {
     public enum CurrencyTransactionStatus
     {
-        A,
-        R,
-        D
+        A = 1,
+        R = 2,
+        D = 3
     }
 }

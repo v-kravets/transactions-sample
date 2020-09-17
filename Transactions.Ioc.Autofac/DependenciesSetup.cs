@@ -6,6 +6,10 @@ using Transactions.Parsing.SystemXmlSerialization.Abstract;
 using Transactions.Parsing.SystemXmlSerialization.Concrete;
 using Transactions.Parsing.TinyCsvParser.Abstract;
 using Transactions.Parsing.TinyCsvParser.Concrete;
+using Transactions.Repository.MsSql.Concrete.Model;
+using Transactions.Services.Abstract;
+using Transactions.Services.Concrete;
+using Transactions.Services.Transactions.Concrete;
 
 namespace Transactions.Ioc.Autofac
 {
@@ -13,6 +17,11 @@ namespace Transactions.Ioc.Autofac
     {
         public static ContainerBuilder SetupDependencies(this ContainerBuilder builder)
         {
+            builder.RegisterType<TransactionsContext>().As<ICurrencyTransactionRepository>().SingleInstance();
+            
+            builder.RegisterType<CurrencyTransactionsService>().As<ICurrencyTransactionService>().SingleInstance();
+            builder.RegisterType<CurrencyTransactionsServices>().As<ICurrencyTransactionsServices>().SingleInstance();
+            
             builder.RegisterType<CsvParsingStrategy>().As<ICsvParsingStrategy>().SingleInstance();
             builder.RegisterType<XmlParsingStrategy>().As<IXmlParsingStrategy>().SingleInstance();
             
