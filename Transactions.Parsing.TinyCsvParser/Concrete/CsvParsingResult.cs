@@ -10,7 +10,7 @@ namespace Transactions.Parsing.TinyCsvParser.Concrete
         public CurrencyTransaction[] Transactions { get; private set; }
         public bool Success { get; private set; }
         public string Error { get; private set; }
-        private CsvCurrencyTransactionRow[] CsvTransactions { get; set; }
+        public CsvCurrencyTransactionRow[] CsvTransactions { get; set; }
 
         public static CsvParsingResult Create(CurrencyTransaction[] transaction, bool success, string error, CsvCurrencyTransactionRow[] csvTransactions)
         {
