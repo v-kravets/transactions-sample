@@ -13,6 +13,7 @@ namespace Transactions.Parsing.TinyCsvParser.Concrete
         public Task<IParsingResult> ParseTransactionsAsync(Stream stream)
         {
             var lines = new StreamReader(stream).ReadToEnd();
+            lines = lines.Replace("�", "\"");
             var parserOptions = new CsvParserOptions(false, ',');
             var csvParser = new CsvParser<CsvCurrencyTransactionRow>(parserOptions, new CsvCurrencyTransactionRowMapping());
             var parsingResult = csvParser
