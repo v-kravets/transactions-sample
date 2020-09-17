@@ -12,15 +12,18 @@ namespace Transactions.Repository.MsSql.Concrete.Model
     {
         public async Task SaveTransactionsAsync(IEnumerable<Transactions.Model.Concrete.CurrencyTransaction> transactions)
         {
-            var currenciesDict = Currency.ToDictionary(d => d.Name, d => d.Id);
+            var currenciesDict = Currency.ToDictionary(d => d.Name);
+            var statusesDict = Status.ToDictionary(d => d.Id);
             var transactionsToSave = new List<CurrencyTransaction>();
             foreach (var currencyTransaction in transactions)
             {
                 transactionsToSave.Add(Concrete.Model.CurrencyTransaction.Create(currencyTransaction.Id,
                     currencyTransaction.Amount,
-                    currenciesDict[currencyTransaction.CurrencyCode],
+                    currenciesDict[currencyTransaction.CurrencyCode].Id,
                     currencyTransaction.TransactionDateUtc,
-                    (byte) currencyTransaction.Status));
+                    (byte) currencyTransaction.Status,
+                    currenciesDict[currencyTransaction.CurrencyCode],
+                    statusesDict[(byte) currencyTransaction.Status]));
             }
 
             await CurrencyTransaction.AddRangeAsync(transactionsToSave);
@@ -29,19 +32,19 @@ namespace Transactions.Repository.MsSql.Concrete.Model
 
         public async Task<IEnumerable<Transactions.Model.Concrete.CurrencyTransaction>> GetByDateRangeAsync(DateTime fromUtc, DateTime toUtc)
         {
-            var items = await CurrencyTransaction.Where(t => fromUtc <= t.TimestampUtc && t.TimestampUtc <= toUtc).ToListAsync();
+            var items = await CurrencyTransaction.Include(c => c.Currency).Where(t => fromUtc <= t.TimestampUtc && t.TimestampUtc <= toUtc).ToListAsync();
             return items.Select(t => t.ToDomainModel()).ToList();
         }
 
         public async Task<IEnumerable<Transactions.Model.Concrete.CurrencyTransaction>> GetByCurrencyAsync(string currency)
         {
-            var items = await CurrencyTransaction.Where(t => t.Currency.Name == currency.ToUpper()).ToListAsync();
+            var items = await CurrencyTransaction.Include(c => c.Currency).Where(t => t.Currency.Name == currency.ToUpper()).ToListAsync();
             return items.Select(t => t.ToDomainModel()).ToList();
         }
 
         public async Task<IEnumerable<Transactions.Model.Concrete.CurrencyTransaction>> GetByStatusAsync(CurrencyTransactionStatus status)
         {
-            var items = await CurrencyTransaction.Where(t => t.StatusId == (byte) status).ToListAsync();
+            var items = await CurrencyTransaction.Include(c => c.Currency).Where(t => t.StatusId == (byte) status).ToListAsync();
             return items.Select(t => t.ToDomainModel()).ToList();
         }
     }

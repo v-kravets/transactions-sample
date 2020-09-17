@@ -14,7 +14,14 @@ namespace Transactions.Repository.MsSql.Concrete.Model
         public virtual Currency Currency { get; set; }
         public virtual Status Status { get; set; }
         
-        public static CurrencyTransaction Create(string id, decimal amount, byte currencyId, DateTime dateUtc, byte statusId)
+        public static CurrencyTransaction Create(
+            string id,
+            decimal amount,
+            byte currencyId,
+            DateTime dateUtc,
+            byte statusId,
+            Currency currency,
+            Status status)
         {
             return new CurrencyTransaction
             {
@@ -22,7 +29,9 @@ namespace Transactions.Repository.MsSql.Concrete.Model
                 Amount = amount,
                 CurrencyId = currencyId,
                 TimestampUtc = dateUtc,
-                StatusId = statusId
+                StatusId = statusId,
+                Currency = currency,
+                Status = status
             };
         }
 

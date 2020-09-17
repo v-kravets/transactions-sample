@@ -60,7 +60,10 @@ namespace Transactions.Web
 
             app.UseRouting();
 
-            app.UseSwagger().UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transactions Api V1"); });
+            app.UseSwagger().UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transactions Api V1");
+            });
             
             app.UseEndpoints(endpoints =>
             {
