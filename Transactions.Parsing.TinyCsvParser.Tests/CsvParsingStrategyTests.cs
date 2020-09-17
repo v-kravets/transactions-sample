@@ -16,8 +16,8 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         public CsvParsingStrategyTests(ITestOutputHelper outputHelper) { _outputHelper = outputHelper; }
 
         [Theory]
-        [InlineData("“Invoice0000001”,”1,000.00”, “USD”, “20/02/2019 12:33:16”, “Approved”\r\n"
-                    + "“Invoice0000002”,”300.00”,”USD”,”21/02/2019 02:04:59”, “Failed”")]
+        [InlineData("\"Invoice0000001\",\"1,000.00\", \"USD\", \"20/02/2019 12:33:16\", \"Approved\"\r\n"
+                    + "\"Invoice0000002\",\"300.00\",\"USD\",\"21/02/2019 02:04:59\", \"Failed\"")]
         public async Task ParsedFewLisnesOk(string inputData)
         {
             var strategy = new CsvParsingStrategy();
@@ -29,7 +29,7 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         }
         
         [Theory]
-        [InlineData("“Invoice0000001”,”1,000.00”, “USD”, “20/02/2019 12:33:16”, “Approved”")]
+        [InlineData("\"Invoice0000001\",\"1,000.00\", \"USD\", \"20/02/2019 12:33:16\", \"Approved\"")]
         public async Task FieldDetailsReadOk(string inputData)
         {
             var strategy = new CsvParsingStrategy();
@@ -46,7 +46,7 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         }
         
         [Theory]
-        [InlineData("“Invoice0000001Invoice0000001Invoice0000001Invoice0”,”1,000.00”, “USD”, “20/02/2019 12:33:16”, “Approved”")]
+        [InlineData("\"Invoice0000001Invoice0000001Invoice0000001Invoice0\",\"1,000.00\", \"USD\", \"20/02/2019 12:33:16\", \"Approved\"")]
         public async Task IdLengthFor50PassesOk(string inputData)
         {
             var strategy = new CsvParsingStrategy();
@@ -58,8 +58,8 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         }
         
         [Theory]
-        [InlineData("“Invoice0000001Invoice0000001Invoice0000001Invoice01”,”1,000.00”, “USD”, “20/02/2019 12:33:16”, “Approved”\r\n"
-                    + "“Invoice0000001Invoice0000001Invoice0000001Invoice011”,”1,000.00”, “USD”, “20/02/2019 12:33:16”, “Approved”")]
+        [InlineData("\"Invoice0000001Invoice0000001Invoice0000001Invoice01\",\"1,000.00\", \"USD\", \"20/02/2019 12:33:16\", \"Approved\"\r\n"
+                    + "\"Invoice0000001Invoice0000001Invoice0000001Invoice011\",\"1,000.00\", \"USD\", \"20/02/2019 12:33:16\", \"Approved\"")]
         public async Task IdLengthFor51Fails(string inputData)
         {
             var strategy = new CsvParsingStrategy();
@@ -71,7 +71,7 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         }
         
         [Theory]
-        [InlineData("“Invoice0000001”,”1,000.00”, “ZZZ”, “20/02/2019 12:33:16”, “Approved”")]
+        [InlineData("\"Invoice0000001\",\"1,000.00\", \"ZZZ\", \"20/02/2019 12:33:16\", \"Approved\"")]
         public async Task InvalidCurrencyError(string inputData)
         {
             var strategy = new CsvParsingStrategy();
@@ -84,7 +84,7 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         }
         
         [Theory]
-        [InlineData("“Invoice0000001”,”1,000.00”, “ZZZ”, “20/02/2019 12:33:16”, “SomeStatus”")]
+        [InlineData("\"Invoice0000001\",\"1,000.00\", \"ZZZ\", \"20/02/2019 12:33:16\", \"SomeStatus\"")]
         public async Task InvalidStatusError(string inputData)
         {
             var strategy = new CsvParsingStrategy();
@@ -95,7 +95,7 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         }
         
         [Theory]
-        [InlineData("“Invoice0000001”,”1,000.00”, “ZZZ”, “InvalidData”, “Approved”")]
+        [InlineData("\"Invoice0000001\",\"1,000.00\", \"ZZZ\", \"InvalidData\", \"Approved\"")]
         public async Task InvalidDateError(string inputData)
         {
             var strategy = new CsvParsingStrategy();
