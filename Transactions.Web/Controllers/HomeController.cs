@@ -67,7 +67,7 @@ namespace Transactions.Web.Controllers
                     return BadRequest("Looks like some of transactions were already imported"); 
                 }
                 
-                Trace.TraceError(exceptionExpanded, ex);
+                Trace.TraceError(exceptionExpanded);
                 return BadRequest("Importing error");
             }
 

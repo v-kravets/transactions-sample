@@ -17,10 +17,10 @@ namespace Transactions.Ioc.Autofac
     {
         public static ContainerBuilder SetupDependencies(this ContainerBuilder builder)
         {
-            builder.RegisterType<TransactionsContext>().As<ICurrencyTransactionRepository>().SingleInstance();
+            builder.RegisterType<TransactionsContext>().As<ICurrencyTransactionRepository>().InstancePerLifetimeScope();
             
-            builder.RegisterType<CurrencyTransactionsService>().As<ICurrencyTransactionService>().SingleInstance();
-            builder.RegisterType<CurrencyTransactionsServices>().As<ICurrencyTransactionsServices>().SingleInstance();
+            builder.RegisterType<CurrencyTransactionsService>().As<ICurrencyTransactionService>().InstancePerLifetimeScope();
+            builder.RegisterType<CurrencyTransactionsServices>().As<ICurrencyTransactionsServices>().InstancePerLifetimeScope();
             
             builder.RegisterType<CsvParsingStrategy>().As<ICsvParsingStrategy>().SingleInstance();
             builder.RegisterType<XmlParsingStrategy>().As<IXmlParsingStrategy>().SingleInstance();
