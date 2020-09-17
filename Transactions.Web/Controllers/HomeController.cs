@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Transactions.Parsing.Abstract;
@@ -25,7 +27,7 @@ namespace Transactions.Web.Controllers
         }
         
         [HttpPost]
-        public IActionResult Index(FileUploadViewModel model)
+        public async Task<IActionResult> Index(FileUploadViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -36,6 +38,15 @@ namespace Transactions.Web.Controllers
             {
                 return BadRequest("File is over allowed limit");
             }
+
+            var strategy = _parsingStrategyFactory.GetStrategy(Path.GetExtension(model.FileInfo.FileName));
+            var parsingResults = await strategy.ParseTransactionsAsync(model.FileInfo.OpenReadStream());
+            if (!parsingResults.Success)
+            {
+                return BadRequest(parsingResults.Error);
+            }
+
+            //todo save into database
             
             return Ok();
         }

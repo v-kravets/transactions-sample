@@ -21,7 +21,7 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         public async Task ParsedFewLisnesOk(string inputData)
         {
             var strategy = new CsvParsingStrategy();
-            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData)));
+            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData))) as CsvParsingResult;
             Assert.True(results.Success);
             Assert.Equal(2, results.Transactions.Length);
             
@@ -33,7 +33,7 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         public async Task FieldDetailsReadOk(string inputData)
         {
             var strategy = new CsvParsingStrategy();
-            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData)));
+            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData))) as CsvParsingResult;
             Assert.True(results.Success);
             Assert.Single(results.Transactions);
             Assert.Equal("Invoice0000001", results.Transactions[0].Id);
@@ -50,7 +50,7 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         public async Task IdLengthFor50PassesOk(string inputData)
         {
             var strategy = new CsvParsingStrategy();
-            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData)));
+            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData))) as CsvParsingResult;
             Assert.True(results.Success);
             Assert.Single(results.Transactions);
             
@@ -58,13 +58,14 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         }
         
         [Theory]
-        [InlineData("“Invoice0000001Invoice0000001Invoice0000001Invoice01”,”1,000.00”, “USD”, “20/02/2019 12:33:16”, “Approved”")]
+        [InlineData("“Invoice0000001Invoice0000001Invoice0000001Invoice01”,”1,000.00”, “USD”, “20/02/2019 12:33:16”, “Approved”\r\n"
+                    + "“Invoice0000001Invoice0000001Invoice0000001Invoice011”,”1,000.00”, “USD”, “20/02/2019 12:33:16”, “Approved”")]
         public async Task IdLengthFor51Fails(string inputData)
         {
             var strategy = new CsvParsingStrategy();
-            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData)));
+            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData))) as CsvParsingResult;
             Assert.False(results.Success);
-            Assert.Equal($"Id over 50 found: Invoice0000001Invoice0000001Invoice0000001Invoice01", results.Error);
+            Assert.Equal($"Row 1 validation errors: Id field is over 50 characters\r\nRow 2 validation errors: Id field is over 50 characters", results.Error);
             
             _outputHelper.WriteLine(string.Join(Environment.NewLine, ((CsvParsingResult)results).CsvTransactions.Select(t => t.ToString())));
         }
@@ -74,9 +75,10 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         public async Task InvalidCurrencyError(string inputData)
         {
             var strategy = new CsvParsingStrategy();
-            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData)));
+            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData))) as CsvParsingResult;
             Assert.False(results.Success);
-            Assert.Equal($"Invalid currency code for transactions with ids found: Invoice0000001", results.Error);
+            
+            Assert.Equal($"Row 1 validation errors: Invalid currency code ZZZ", results.Error);
             
             _outputHelper.WriteLine(string.Join(Environment.NewLine, ((CsvParsingResult)results).CsvTransactions.Select(t => t.ToString())));
         }
@@ -86,10 +88,10 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         public async Task InvalidStatusError(string inputData)
         {
             var strategy = new CsvParsingStrategy();
-            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData)));
+            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData))) as CsvParsingResult;
             Assert.False(results.Success);
             
-            Assert.Equal($"CsvMappingError (ColumnIndex = 4, Value = Column 4 with Value 'SomeStatus' cannot be converted, UnmappedRow = Invoice0000001|1,000.00|ZZZ|20/02/2019 12:33:16|SomeStatus)", results.Error);
+            Assert.Equal($"Row 1 validation errors: CsvMappingError (ColumnIndex = 4, Value = Column 4 with Value 'SomeStatus' cannot be converted, UnmappedRow = Invoice0000001|1,000.00|ZZZ|20/02/2019 12:33:16|SomeStatus)", results.Error);
         }
         
         [Theory]
@@ -97,10 +99,10 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         public async Task InvalidDateError(string inputData)
         {
             var strategy = new CsvParsingStrategy();
-            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData)));
+            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData))) as CsvParsingResult;
             Assert.False(results.Success);
             
-            Assert.Equal($"CsvMappingError (ColumnIndex = 3, Value = Column 3 with Value 'InvalidData' cannot be converted, UnmappedRow = Invoice0000001|1,000.00|ZZZ|InvalidData|Approved)", results.Error);
+            Assert.Equal($"Row 1 validation errors: CsvMappingError (ColumnIndex = 3, Value = Column 3 with Value 'InvalidData' cannot be converted, UnmappedRow = Invoice0000001|1,000.00|ZZZ|InvalidData|Approved)", results.Error);
         }
         
         [Theory]
@@ -108,7 +110,7 @@ namespace Transactions.Parsing.TinyCsvParser.Tests
         public async Task EmptyStringPassedOk(string inputData)
         {
             var strategy = new CsvParsingStrategy();
-            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData)));
+            var results = await strategy.ParseTransactionsAsync(new MemoryStream(Encoding.UTF8.GetBytes(inputData))) as CsvParsingResult;
             Assert.True(results.Success);
             Assert.Empty(results.Transactions);
         }

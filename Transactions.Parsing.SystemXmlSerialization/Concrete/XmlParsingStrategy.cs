@@ -18,18 +18,17 @@ namespace Transactions.Parsing.SystemXmlSerialization.Concrete
                 using (var sr = new StreamReader(stream))
                 {
                     var stringToDeserialize = await sr.ReadToEndAsync();
-                    var xmlTransactions = DeserializeFromXmlStringAsync(stringToDeserialize);
+                    var xmlTransactions = DeserializeFromXmlStringAsync(stringToDeserialize).Validate();
                     return XmlParsingStrategyEntryValidator.GetPostParsingValidationResult(xmlTransactions);
                 }
             }
-            // todo add UI meaningful description for invalid format parsing error
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
                 Trace.TraceError(ex.ExpandException(), ex);
                 return XmlParsingResult.Create(false, ex.Message, null);
             }
         }
-        
+
         private static XmlCurrencyTransactionEntry[] DeserializeFromXmlStringAsync(string objectToDeserialize)
         {
             using (TextReader reader = new StringReader(objectToDeserialize))

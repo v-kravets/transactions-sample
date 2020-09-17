@@ -15,9 +15,6 @@
 
   <ItemGroup>
     <None Remove="Resources\Sample1.xml" />
-    <Content Include="Resources\Sample1.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
