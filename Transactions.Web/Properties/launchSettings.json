@@ -20,7 +20,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AZURE_CLIENT_ID": "Server=tcp:transactionsuploader.database.windows.net,1433;Initial Catalog=transactionsUploader;Persist Security Info=False;User ID=transactionsuploader;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+        "SqlServerConncetionString": "Server=localhost;Initial Catalog=transactionsUploader;Persist Security Info=False;User ID=transactionsuploader;Password=transactionsuploader;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"      
     }
