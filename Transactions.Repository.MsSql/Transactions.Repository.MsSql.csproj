@@ -10,16 +10,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Transactions.Services\Transactions.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <HintPath>..\Transactions.Web\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
