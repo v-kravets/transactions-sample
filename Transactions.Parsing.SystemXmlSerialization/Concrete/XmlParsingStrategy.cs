@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Transactions.Parsing.Abstract;
-using Transactions.Parsing.SystemXmlSerialization.Abstract;
 using Transactions.Utils;
 
 namespace Transactions.Parsing.SystemXmlSerialization.Concrete

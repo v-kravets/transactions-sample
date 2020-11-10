@@ -5,10 +5,10 @@ namespace Transactions.Parsing.Concrete
 {
     public class ParsingStrategyFactory : IParsingStrategyFactory
     {
-        private readonly IParsingStrategy _csvParsingStrategy;
-        private readonly IParsingStrategy _xmlParsingStrategy;
+        private readonly ICsvParsingStrategy _csvParsingStrategy;
+        private readonly IXmlParsingStrategy _xmlParsingStrategy;
 
-        public ParsingStrategyFactory(IParsingStrategy csvParsingStrategy, IParsingStrategy xmlParsingStrategy)
+        public ParsingStrategyFactory(ICsvParsingStrategy csvParsingStrategy, IXmlParsingStrategy xmlParsingStrategy)
         {
             _csvParsingStrategy = csvParsingStrategy;
             _xmlParsingStrategy = xmlParsingStrategy;

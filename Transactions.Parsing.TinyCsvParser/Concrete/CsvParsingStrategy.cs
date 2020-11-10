@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using TinyCsvParser;
 using Transactions.Parsing.Abstract;
-using Transactions.Parsing.TinyCsvParser.Abstract;
 
 namespace Transactions.Parsing.TinyCsvParser.Concrete
 {
